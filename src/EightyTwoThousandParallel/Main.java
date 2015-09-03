@@ -16,6 +16,8 @@ public class Main {
 	}
 
 	private void start() {
+		Integer ii = new Integer(5);
+		
 		/*toBase3("100");*/
 		for(int i = 0; i < 5; i++) {
 			if(i == 2) {
@@ -37,6 +39,7 @@ public class Main {
 			System.out.println(i + " : Perfect in all bases!");
 		}
 		for(int i = 5; i < 10000000; i++) {
+			
 			if(toBase3(i + "") == false) {
 				//System.out.println(i + " : Failed base 3");
 				continue;

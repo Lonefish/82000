@@ -33,7 +33,7 @@ public class Main {
 			}
 			System.out.println(i + " : Perfect in all bases!");
 		}
-		for(int i = 5; i < 10000000; i++) {
+		for(int i = 5; i < 100000000; i++) {
 			if(toBase3(i + "") == false) {
 				//System.out.println(i + " : Failed base 3");
 				continue;
