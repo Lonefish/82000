@@ -1,61 +1,42 @@
 package EightyTwoThousandParallel;
+
 import java.math.BigInteger;
 
-public class Main {
-	/*
-	 * Start from arraystrings in other bases with 0 and 1
-	 */
+public class CheckThread extends Thread {
+	int threadNumber;
+	int iterations;
+	int startingPoint, endPoint;
 	final static BigInteger THREE = new BigInteger("3");
 	final static BigInteger FOUR = new BigInteger("4");
 	final static BigInteger FIVE = new BigInteger("5");
-	int threads = 20;
-	int iterationsPerThread = 500000;
-	CheckThread[] threadArray;
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		long start = System.currentTimeMillis();
-		Main m = new Main();
-		m.start();
-		long end = System.currentTimeMillis();
-		System.out.println(end-start);
+
+	public CheckThread(int threadNumber, int iterations) {
+		super();
+		this.threadNumber = threadNumber;
+		this.iterations = iterations;
+		this.startingPoint = 5 + iterations * threadNumber;
+		this.endPoint = 5 + (iterations * (threadNumber + 1));
 	}
 
-	private void start() {
-		/*toBase3("100");*/
-		for(int i = 0; i < 5; i++) {
-			if(i == 2) {
-				System.out.println(i + " : Perfect in all bases!");
+	public void run() {
+		System.out.println("Starting thread " + threadNumber + " starting at " + startingPoint + " ending at " + endPoint);
+		for (int i = startingPoint; i < endPoint; i++) {
+			if (toBase3(i + "") == false) {
+				//System.out.println(i + " : Failed base 3");
 				continue;
 			}
-			if(toBase3(i + "") == false) {
-				System.out.println(i + " : Failed base 3");
+			if (toBase4(i + "") == false) {
+				//System.out.println(i + " : Failed base 4");
 				continue;
 			}
-			if(i == 3) {
-				System.out.println(i + " : Perfect in all bases!");
-				continue;
-			}
-			if(toBase4(i + "") == false) {
-				System.out.println(i + " : Failed base 4");
+			if (toBase5(i + "") == false) {
+				//System.out.println(i + " : Failed base 5");
 				continue;
 			}
 			System.out.println(i + " : Perfect in all bases!");
 		}
-		threadArray = new CheckThread[threads];
-		for(int i = 0; i < threads; i++) {
-			threadArray[i] = new CheckThread(i, iterationsPerThread);
-			threadArray[i].start();
-		}
-		for(int i = 0; i < threads; i++) {
-			try {
-				threadArray[i].join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		System.out.println("Stopping thread " + threadNumber);
+
 	}
 
 	private boolean toBase3(String number) {
@@ -65,22 +46,22 @@ public class Main {
 		BigInteger temp = new BigInteger("0");
 		BigInteger[] bigIntArray = b.divideAndRemainder(THREE);
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 			return onlyOnesAndZeroes;
 		}
-		//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+		// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 		while (bigIntArray[0].compareTo(BigInteger.ZERO) != 0) {
 			bigIntArray = bigIntArray[0].divideAndRemainder(THREE);
-			//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+			// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 			if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-				//System.out.println("BIGGER THAN ONE");
+				// System.out.println("BIGGER THAN ONE");
 				onlyOnesAndZeroes = false;
 				break;
 			}
 		}
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 		}
 		return onlyOnesAndZeroes;
@@ -93,23 +74,23 @@ public class Main {
 		BigInteger b = new BigInteger(number);
 		BigInteger temp = new BigInteger("0");
 		BigInteger[] bigIntArray = b.divideAndRemainder(FOUR);
-		//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+		// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 			return onlyOnesAndZeroes;
 		}
 		while (bigIntArray[0].compareTo(BigInteger.ZERO) != 0) {
 			bigIntArray = bigIntArray[0].divideAndRemainder(FOUR);
-			//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+			// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 			if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-				//System.out.println("BIGGER THAN ONE");
+				// System.out.println("BIGGER THAN ONE");
 				onlyOnesAndZeroes = false;
 				break;
 			}
 		}
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 		}
 		return onlyOnesAndZeroes;
@@ -122,22 +103,22 @@ public class Main {
 		BigInteger temp = new BigInteger("0");
 		BigInteger[] bigIntArray = b.divideAndRemainder(FIVE);
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 			return onlyOnesAndZeroes;
 		}
-		//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+		// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 		while (bigIntArray[0].compareTo(BigInteger.ZERO) != 0) {
 			bigIntArray = bigIntArray[0].divideAndRemainder(FIVE);
-			//System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
+			// System.out.println(bigIntArray[0] + " - " + bigIntArray[1]);
 			if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-				//System.out.println("BIGGER THAN ONE");
+				// System.out.println("BIGGER THAN ONE");
 				onlyOnesAndZeroes = false;
 				break;
 			}
 		}
 		if (bigIntArray[1].compareTo(BigInteger.ONE) == 1) {
-			//System.out.println("BIGGER THAN ONE");
+			// System.out.println("BIGGER THAN ONE");
 			onlyOnesAndZeroes = false;
 		}
 		return onlyOnesAndZeroes;

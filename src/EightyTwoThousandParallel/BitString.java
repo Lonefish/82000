@@ -29,6 +29,17 @@ public class BitString {
 	}
 	
 	/*
+	 * Making a deepcopy of the bitstring
+	 */
+	public BitString lengthenBitString(int extraLength) {
+		BitString bitCopy = new BitString(this.bitstring.length + extraLength);
+		for(int i = 0; i < this.bitstring.length; i++) {
+			bitCopy.bitstring[i] = this.bitstring[i];
+		}
+		return bitCopy;
+	}
+	
+	/*
 	 * To string method
 	 * @see java.lang.Object#toString()
 	 */
@@ -57,13 +68,13 @@ public class BitString {
 	/*
 	 * Add one to the byte array
 	 */
-	public void add(byte[] bitstring) {
+	public void add() {
 		// TODO Auto-generated method stub
-		if (bitstring[0] == 0) {
-			bitstring[0] = 1;
+		if (this.bitstring[0] == 0) {
+			this.bitstring[0] = 1;
 			return;
 		} else {
-			shiftBitstring(bitstring);
+			this.shiftBitstring();
 			return;
 		}
 	}
@@ -71,13 +82,13 @@ public class BitString {
 	/*
 	 * Private method used in the add function 
 	 */
-	private void shiftBitstring(byte[] bitstring) {
+	private void shiftBitstring() {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < bitstring.length; i++) {
-			if (bitstring[i + 1] == 0) {
-				bitstring[i + 1] = 1;
+		for (int i = 0; i < this.bitstring.length; i++) {
+			if (this.bitstring[i + 1] == 0) {
+				this.bitstring[i + 1] = 1;
 				for (int j = i; j >= 0; j--) {
-					bitstring[j] = 0;
+					this.bitstring[j] = 0;
 				}
 				return;
 			}
